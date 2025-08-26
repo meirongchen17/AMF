@@ -1,4 +1,8 @@
+seqkit grep -f otu_ids.txt rep-sequences.fasta > rep-sequences-selected.fasta ###select AMF OTUs
+grep -c ">" rep-sequences-selected.fasta
 ###using IQTREE
+rm amf_tree.model.gz #remove previous files causing error
+###
 mafft --auto rep-sequences.fasta > aligned.fasta ## aligned the sequence before building the tree
 trimal -automated1 -in aligned.fasta -out aligned_trimmed.fasta ## trim poorly aligned regions
-iqtree2 -s aligned_trimmed.fasta -m MFP -bb 1000 -bnni -alrt 1000 -nt AUTO -pre amf_tree
+iqtree -s aligned_trimmed.fasta -m MFP -bb 1000 -bnni -alrt 1000 -nt AUTO -pre amf_tree
